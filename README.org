@@ -1,5 +1,5 @@
                                     #+TITLE: One Stop Shop
-#+AUTHOR: SriHarsha,Anirudh,Aashish,Sameeranah
+#+AUTHOR: SriHarsha
 #+SETUPFILE: ../../org-templates/level-2.org
 #+EXCLUDE_TAGS: boilerplate
 #+PROPERTY: session *python*
