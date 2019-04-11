@@ -11,8 +11,8 @@
     
     1.CREATE DATABASE USING IN DIRECTORY OF THE APP BY OPENING PYTHON INTERPRETER AND 
     EXECUTING FOLLOWING COMMANDS:
-    from app import db<br/>
-    db.create_all()<br/>
-    name the database as database.db whose location is app directory<br/>
+    from app import db
+    db.create_all()
+    name the database as database.db whose location is app directory
     2.THEN EXECUTE COMMAND python app.py
     3.Make sure DATABASE_URI is set properly to the database location.
