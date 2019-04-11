@@ -1,4 +1,4 @@
-ONE STOP SHOP  
+                                                   ONE STOP SHOP  
     In this web appliation users can buy or sell their products on one platform.
     On opening the webpage you will see various categories of products like Mobiles,Laptops etc.
     On selecting any category you will get products available for buying in that particular category.
