@@ -1,4 +1,4 @@
-                                 ONE STOP SHOP 
+                                     ONE STOP SHOP 
     In this web appliation users can buy or sell their products on one platform.
     On opening the webpage you will see various categories of products like Mobiles,Laptops etc.
     On selecting any category you will get products available for buying in that particular category.
@@ -9,7 +9,8 @@
     
     TO RUN THE APPLICATION FOLLOW THE BELOW INSTRUCTIONS:<br/>
     
-    1.CREATE DATABASE USING IN DIRECTORY OF THE APP BY OPENING PYTHON INTERPRETER AND EXECUTING FOLLOWING COMMANDS:
+    1.CREATE DATABASE USING IN DIRECTORY OF THE APP BY OPENING PYTHON INTERPRETER AND 
+    EXECUTING FOLLOWING COMMANDS:
     from app import db<br/>
     db.create_all()<br/>
     name the database as database.db whose location is app directory<br/>
