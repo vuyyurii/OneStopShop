@@ -24,7 +24,10 @@ One has to install all python modules mentioned in the requirements.txt for runn
 
 #+NAME: steps
 #+BEGIN_SRC
-Go to the app directory.Next You have to create database tables for storing information required by our app.This can be done by entering python interpreter.Type python in terminal an press enter.Then in python interpreter execute command =from app import db=,then execute command =db.create_all()=.Now our required database tables are created.
+Go to the app directory.Next You have to create database tables for storing information required by our app.
+This can be done by entering python interpreter.Type python in terminal an press enter.
+Then in python interpreter execute command =from app import db=,then execute command =db.create_all()=.
+Now our required database tables are created.
 Now execute command =python app.py= in the terminal.
 The server is hosted on '127.0.0.1' port = 5000
 #+END_SRC
