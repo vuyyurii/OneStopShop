@@ -1,0 +1,221 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+One Stop Shop
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='form.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
+{% endblock %}
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+{{super()}}
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('dashboard') }}">One Stop Shop</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="/viewCart">Cart</a></li>
+            <li><a href="/viewhistory">History</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+         <!-- <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>-->
+        </div>
+      </div>
+    </nav>
+
+          <h1 class="page-header">Welcome,{{ naam }}</h1>
+
+          <div class="row placeholders">
+            <!--<div class="col-xs-6 col-sm-3 placeholder">-->
+              <marquee><img src="http://www.valvitalia.com/App_Themes/Valvitalia/ImgOneStopShop_en.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail"></marquee>
+<!--</div>-->
+</div>
+<div class="container">
+
+    <div  class="starter-template">
+        <p class="lead">You can buy and sell your products on one platform<br/> One_Stop_shop</p><br/><br/>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script>
+ 
+var aNP = function()
+{
+    var name = document.getElementById("pname").value;
+    var price = document.getElementById("pprice").value;
+    var category = document.getElementById("pcat").value;
+    var description = document.getElementById("pdes").value;
+    var num = document.getElementById("pcount").value;
+    var img = document.getElementById("file-picker").value;
+    var tOD = document.getElementById("ptod").value;
+    var mOD = document.getElementById("pmod").value;
+    var seller = '{{ naam }}';
+    if(name==''||price==''||category==''||description==''||num==''||img==''||tOD==''||mOD==''||seller==''||/[^0-9]/.test(price)==true||/[^0-9]/.test(num)==true)
+{
+alert("Invalid Entries");
+}
+else
+{
+    document.getElementById("upload-form").submit();
+    console.log(window.location.href );
+    console.log(img);
+    console.log(seller);
+var csrf_token = "{{ csrf_token() }}";
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://127.0.0.1:5000/addProduct',
+            method:'POST',
+            data:{
+                name:name,price:price,category:category,description:description,num:num,seller:seller,img:img,tOD:tOD,mOD:mOD,
+            },
+            success:function(response){
+                console.log(response);
+                //viewAllProducts();
+                return response;
+            },
+            error:function(jqXHR,exception){
+                console.log(jqXHR.responseText);
+                return jqXHR;
+            },
+        });
+    });
+}
+};
+var vP = function()
+{
+
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://127.0.0.1:5000/products',
+            method:'POST',
+            data:{
+                str:window.location.href,
+            },
+            success:function(response){
+                allProducts = response.products;
+                var str='';
+                for(var i=0;i<allProducts.length;i++)
+                {
+		    console.log(allProducts[i].img);
+                    str = str+'<tr>'+'<td>'+allProducts[i].name+'</td>'+'<td>'+allProducts[i].price+'</td>'+'<td>'+allProducts[i].category+'</td>'+'<td>'+allProducts[i].description+'</td>'+'<td>'+allProducts[i].num+'</td>'+'<td>'+allProducts[i].seller+'</td>'+'<td>'+'<img src="/upload/'+allProducts[i].img+'"'+'alt="image">'+'</td>'+'</tr>';
+                }
+                document.getElementById("pdisplay").innerHTML = str;
+                console.log(str);
+                return response;
+            },
+            error:function(jqXHR,exception){
+                console.log(jqXHR.responseText);
+                return jqXHR;
+            },
+        });
+    });
+};
+
+        </script>
+        <h1 style="text-align:center">One_Stop_Shop</h1><br/>
+       
+
+  <form id="addNewProduct" method="POST">
+    <label for="pname">Product Name:</label>
+    <input type="text" id="pname"  placeholder="product name..">
+
+    <label for="lname">Expected price of the product:</label>
+    <input type="text" id="pprice"  placeholder="Price of the product..">
+
+    <label for="pcat">Category:</label>
+    <select id="pcat" name="country">
+      <option value="mobiles">Mobiles</option>
+      <option value="laptops">laptops</option>
+      <option value="mobileaccessories">Mobile Accessories</option>
+      <option value="bikes">Bikes</option>
+      <option value="furniture">Furniture</option>
+    </select>
+<label for="pdes">Description:</label>
+    <input type="text" id="pdes"  placeholder="product description..">
+<label for="pcount">No Of Items:</label>
+    <input type="text" id="pcount"  placeholder="no of items..">
+<label for="fname">Enter time of delivery:</label>
+    <input type="text" id="ptod"  placeholder="time of delivery..">
+<label for="fname">Enter method of delivery:</label>
+    <input type="text" id="pmod"  placeholder="method of delivery..">
+  </form>
+<form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+
+    <strong>Images:</strong><br/>
+    <input style="text-align:center"id="file-picker" type="file" name="file" accept="image/*" multiple>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div style="text-align:center"id="msg"></div>
+    <!--<input type="submit" value="Upload!" id="upload-button">-->
+</form>
+ <input type="submit" value="Submit" onclick="aNP()">
+
+<br/>
+
+   <!-- <table border='4' width="50%">
+        <thead>
+            <tr>
+                <td style="text-align:center">NAME</td>
+                <td style="text-align:center">PRICE</td>
+                <td style="text-align:center">CATEGORY</td>
+                <td style="text-align:center">DESCIPTION</td>
+                <td style="text-align:center">NO OF ITEMS</td>
+		<td style="text-align:center">USER</td>
+                <td style="text-align:center">IMAGE</td>
+            </tr>
+        </thead>
+        <tbody id="pdisplay">
+        </tbody>
+    </table>-->
+    </body>
+<script>
+$("#file-picker").change(function(){
+
+        var input = document.getElementById('file-picker');
+        console.log( document.getElementById("file-picker").value);
+        for (var i=0; i<input.files.length; i++)
+        {
+        //koala.jpg, koala.JPG substring(index) lastIndexOf('a') koala.1.jpg
+            var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+
+            if ((ext == 'jpg') || (ext == 'png'))
+            {
+                $("#msg").text("Files are supported")
+            }
+            else
+            {
+                $("#msg").text("Files are NOT supported")
+                document.getElementById("file-picker").value ="";
+            }
+
+        }
+
+
+    } );
+</script>
+</div>
+{% endblock %}

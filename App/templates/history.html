@@ -1,0 +1,92 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+One Stop Shop
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
+{% endblock %}
+
+{% block scripts %}
+<!--<script src="{{url_for('.static', filename='myscripts3.js')}}"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+{{super()}}
+{% endblock %}
+{% block body_attribs %} onload="aTH()" {% endblock %}
+{% block content %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('dashboard') }}">One Stop Shop</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="/viewCart">Cart</a></li>
+            <li><a href="#">History</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+          <!--<form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>-->
+        </div>
+      </div>
+    </nav>
+
+          <h1 class="page-header">Welcome,{{ naam }}</h1>
+
+          <div class="row placeholders">
+           <!-- <div class="col-xs-6 col-sm-3 placeholder">-->
+              <marquee><img src="http://www.valvitalia.com/App_Themes/Valvitalia/ImgOneStopShop_en.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail"></marquee>
+<!--</div>-->
+</div>
+<div class="container">
+<script>
+var aTH = function()
+{
+var cartpro = {{ products|tojson }};
+var str_array = cartpro.split(',');
+var str = '';
+var total = 0;
+var l = str_array.length;
+if(l==0 || cartpro == '')
+{
+str = 'NO PURCHAGES ARE DONE BY YOU YET';
+}
+else
+{
+for(var i = 0 ; i < l ; i = i + 2)
+{
+str = str + '<tr><td>'+'<a href="/prodetails/'+str_array[i]+'">'+str_array[i]+'</a>'+'</td>'+'<td>'+str_array[i+1]+'</td></tr>';
+total = total + Number(str_array[i+1]);
+}
+}
+str = str + '<br/><br/>Total Amount = '+total+'<br>'
+document.getElementById("cart").innerHTML = str;
+console.log(str);
+}
+</script>
+<h3>PURCHASE HISTORY:</h3><br/><br/>
+<table>
+<thead>
+<tr>
+<th>Product
+</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody id = "cart">
+</tbody>
+</table><br/><br/>
+<a href="/clearhistory">clear history</a>
+</div>
+{% endblock %}

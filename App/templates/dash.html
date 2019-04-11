@@ -1,0 +1,88 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+One Stop Shop
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+{% block scripts %}
+<script src="{{url_for('.static', filename='myscripts1.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+{{super()}}
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">One Stop Shop</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+          <h1 class="page-header">Welcome, {{ naam }}</h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+</div>
+</div>
+<div>
+<h1 style="text-align:center">One_Stop_Shop</h1><br/>
+        <button type="button" onclick="vP()">Products available for buying:</button><br/>
+        <form id="addNewProduct" method="POST">
+            Name of the product:
+            <input id="pname" type="text"><br/><br/>
+            Expected price for product:
+            <input id="pprice" type="text"><br/><br/>
+            Category of the product:
+            <select id="pcat">
+                     <option value="mobiles">Mobiles</option>
+                     <option value="laptops">laptops</option>
+                     <option value="Automobiles">Automobiles</option>
+            </select><br/><br/>
+            Description of the product:
+            <textarea id="pdes" rows="5" cols="50"></textarea><br/><br/>
+            Enter no of items available:
+            <input id="pcount" type="text"><br/><br/>
+            <input id="pimg" type="file" name="pic" accept="image/*"><br/><br/>
+        <button type="button" onclick="aNP()">click here to sell a product</button>
+</form>
+<br/>
+
+    <table border='4' width="50%">
+        <thead>
+            <tr>
+                <td style="text-align:center">NAME</td>
+                <td style="text-align:center">PRICE</td>
+                <td style="text-align:center">CATEGORY</td>
+                <td style="text-align:center">DESCIPTION</td>
+                <td style="text-align:center">NO OF ITEMS</td>
+		<td style="text-align:center">USER</td>
+            </tr>
+        </thead>
+        <tbody id="pdisplay">
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+One Stop Shop
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
+<link data-require="fontawesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="{{url_for('.static',filename='style.css')}}" />
+{% endblock %}
+
+{% block scripts %}
+<!--<script src="{{url_for('.static', filename='myscripts3.js')}}"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script data-require="jquery@*" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <script src="{{url_for('.static',filename='script.js')}}"></script>
+{{super()}}
+{% endblock %}
+{% block body_attribs %} onload="convert()" {% endblock %}
+{% block content %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('dashboard') }}">One Stop Shop</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="/viewCart">Cart</a></li>
+            <li><a href="/viewhistory">History</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+          <!--<form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>-->
+        </div>
+      </div>
+    </nav>
+
+          <h1 class="page-header">Welcome,{{ naam }}</h1>
+
+          <div class="row placeholders">
+            <!--<div class="col-xs-6 col-sm-3 placeholder">-->
+              <marquee><img src="http://www.valvitalia.com/App_Themes/Valvitalia/ImgOneStopShop_en.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail"></marquee>
+<!--</div>-->
+</div>
+<div class="container">
+<script> var convert = function() {var allproducts = {{ allProducts|tojson }} ;
+console.log(allproducts['category']); 
+str = '<img src="/upload/'+allproducts['img']+'"alt="image"></td></tr><br/><br/><strong>Name Of The Product:</strong>'+allproducts['name']+'<br/><br/><strong>Category Of The Product:</strong>'+allproducts['category']+'<br/><br/><strong>Price:</strong>'+allproducts['price']+'<br/><br/><strong>No Of Items Available:</strong>'+allproducts['num']+'<br/><br/><strong>Seller:</strong>'+allproducts['seller']+'<br/><br/><strong>About The Product:</strong>'+allproducts['description']+'<br/><br/><strong>Time Of Delivery:</strong>'+allproducts['tOD']+'<br/><br/><strong>Method Of Delivery:</strong>'+allproducts['mOD']+'<br/>'; 
+document.getElementById("pdisplay").innerHTML = str;}
+var addtocart = function()
+{
+var allproducts = {{ allProducts|tojson }} ;
+var name = allproducts['name'];
+var csrf_token = "{{ csrf_token() }}";
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+ $(document).ready(function(){
+        $.ajax({
+            url:'http://127.0.0.1:5000/addToCart',
+            method:'POST',
+            data:{
+                name:name,
+            },
+            success:function(response){
+                console.log(response);
+                //viewAllProducts();
+                return response;
+            },
+            error:function(jqXHR,exception){
+                console.log(jqXHR.responseText);
+                return jqXHR;
+            },
+        });
+    });
+};
+var addrating = function()
+{
+var allproducts = {{ allProducts|tojson }};
+var name = allproducts['seller'];
+ var rate = document.getElementById("rating-input").value;
+console.log('http://127.0.0.1:5000/'+name+'/addratingseller');
+var csrf_token = "{{ csrf_token() }}";
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://127.0.0.1:5000/'+name+'/addratingseller',
+            method:'POST',
+            data:{
+                rating:rate,
+            },
+            success:function(response){
+                console.log(response);
+                //location.href = /prodetails/name;
+                location.reload();
+                //viewAllProducts();
+                return response;
+            },
+            error:function(jqXHR,exception){
+                console.log(jqXHR.responseText);
+                return jqXHR;
+            },
+        });
+    });
+};
+</script>
+    <div  class="starter-template">
+        <p class="lead">You can buy and sell your products on one platform<br/> One_Stop_shop</p>
+        <h3 style="text-align:left">Available Products:</h3><br/><br/>
+
+        <p id="pdisplay">
+
+        </p>
+<!--<button type="button" onclick="addtocart()">ADD TO CART</button>-->
+
+</div>
+
+</div>
+<h4 style="text-align:center">Rate the Seller of the above product</h4>
+    <form style="text-align:center"class="formrating">
+      <!-- hide the input -->  
+      <input  type="number" name="rating" id="rating-input" min="1" max="5" />
+    </form>
+    
+    <div style="text-align:center"class="rating" role="optgroup">
+      <!-- in Rails just use 1.upto(5) -->  
+      <i class="fa fa-star-o fa-2x rating-star" id="rating-1" data-rating="1" tabindex="0" aria-label="Rate as one out of 5 stars" role="radio"></i>
+      <i class="fa fa-star-o fa-2x rating-star" id="rating-2" data-rating="2" tabindex="0" aria-label="Rate as two out of 5 stars" role="radio"></i>
+      <i class="fa fa-star-o fa-2x rating-star" id="rating-3" data-rating="3" tabindex="0" aria-label="Rate as three out of 5 stars" role="radio"></i>
+      <i class="fa fa-star-o fa-2x rating-star" id="rating-4" data-rating="4" tabindex="0" aria-label="Rate as four out of 5 stars" role="radio"></i>
+      <i class="fa fa-star-o fa-2x rating-star" id="rating-5" data-rating="5" tabindex="0" aria-label="Rate as five out of 5 stars" role="radio"></i>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+All with latest versions
+flask
+flask_bootstrap
+flask_wtf
+wtforms
+wtforms.validators
+flask_sqlalchemy
+werkzeug.security
+flask_login
+

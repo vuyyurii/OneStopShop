@@ -1,0 +1,91 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+One Stop Shop
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
+{% endblock %}
+{% block scripts %}
+<script src="{{url_for('.static', filename='myscripts1.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+{{super()}}
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('dashboard') }}">One Stop Shop</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="/viewCart">Cart</a></li>
+            <li><a href="/viewhistory">History</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+          <!--<form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>-->
+        </div>
+      </div>
+    </nav>
+
+          <h1 class="page-header">Welcome, {{ naam }}</h1>
+
+          <div class="row placeholders">
+            <!--<div class="col-xs-6 col-sm-3 placeholder">-->
+              <p style="text-align:center;"><marquee><img src="http://www.valvitalia.com/App_Themes/Valvitalia/ImgOneStopShop_en.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail" align="middle"></marquee></p>
+<!--</div>-->
+</div>
+<div class="container">
+
+    <div class="starter-template">
+        <p class="lead">You can buy and sell your products on one platform<br/> One_Stop_shop</p>
+        <h3 style="text-align:left">categories:</h3><br/><br/>
+       <div class="polaroid">
+            <img src="./mobiles.jpg" alt="Mobiles" style="width:50%">
+            <div class="container1">
+                <a href="{{ url_for('mobiles1') }}">Mobiles</a>
+            </div>
+        </div>
+        <div class="polaroid">
+            <img src="http://www.techdaring.com/wp-content/uploads/2016/04/laptops.jpg" alt="Laptops" style="width:50%">
+            <div class="container1">
+                <a href="{{ url_for('laptops1') }}">Laptops</a>
+            </div>
+        </div><br/>
+        <div class="polaroid">
+            <img src="http://media1.santabanta.com/full1/Bikes/Honda%20Bikes/honda-bikes-26v.jpg" alt="Bikes" style="width:50%">
+            <div class="container1">
+                <a href="{{ url_for('bikes1') }}">Bikes</a>
+            </div>
+        </div><br/>
+
+        <div class="polaroid">
+            <img src="https://nopedeal.com/wp-content/uploads/2013/03/mabile_acce.jpg" alt="Mobile Accessories" style="width:50%">
+            <div class="container1">
+                <a href="{{ url_for('mobileaccessories1') }}">Mobile Accesories</a>
+            </div>
+        </div><br/>
+
+        <div class="polaroid">
+            <img src="http://www.jggroup.in/images/furniture.jpg" alt="Furniture" style="width:50%">
+            <div class="container1">
+                <a href="{{ url_for('furniture1') }}">Furniture</a>
+            </div>
+        </div><br/>
+    </div>
+
+</div><!-- /.container -->
+{% endblock %}

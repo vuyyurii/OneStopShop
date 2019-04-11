@@ -1,0 +1,90 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+One Stop Shop
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
+{% endblock %}
+{% block scripts %}
+<script src="{{url_for('.static', filename='myscripts.js')}}"></script>
+{{super()}}
+{% endblock %}
+{% block body_attribs %} onload="convert()" {% endblock %}
+{% block content %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('index') }}">One Stop Shop</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+<script> var convert = function() {var allproducts = {{ allProducts|tojson }} ;
+console.log(allproducts['category']); 
+str = '<img src="/upload/'+allproducts['img']+'"alt="image"></td></tr><br/><br/><strong>Name Of The Product:</strong>'+allproducts['name']+'<br/><br/><strong>Category Of The Product:</strong>'+allproducts['category']+'<br/><br/><strong>Price:</strong>'+allproducts['price']+'<br/><br/><strong>No Of Items Available:</strong>'+allproducts['num']+'<br/><br/><strong>Seller:</strong>'+allproducts['seller']+'<br/><br/><strong>About The Product:</strong>'+allproducts['description']+'<br/><br/><strong>Time Of Delivery:</strong>'+allproducts['tOD']+'<br/><br/><strong>Method Of Delivery:</strong>'+allproducts['mOD']+'<br/><br/><strong>Seller Rating:</strong>'+'{{ sellerrating }}'+' outof 5<br/><br/>'+'<strong>seller ratings:</strong>'+'{{ sellerratings }}'+'<br/><br/>'+'<strong>Product Rating:</strong>'+allproducts['rating']+'out of 5<br/><br/><strong>Total ratings:</strong>'+allproducts['count']+'<br/><br/>'; 
+document.getElementById("pdisplay").innerHTML = str;
+document.getElementById("commentpara").innerHTML = allproducts['comments'];
+console.log(allproducts['comments']);};
+var addtocart = function()
+{
+var allproducts = {{ allProducts|tojson }} ;
+var element = allproducts['name'];
+var csrf_token = "{{ csrf_token() }}";
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+ $(document).ready(function(){
+        $.ajax({
+            url:'http://127.0.0.1:5000/addToCart',
+            method:'POST',
+            data:{
+                name:element,
+            },
+            success:function(response){
+                console.log(response);
+                //viewAllProducts();
+                return response;
+            },
+            error:function(jqXHR,exception){
+                console.log(jqXHR.responseText);
+                return jqXHR;
+            },
+        });
+    });
+}
+</script>
+    <div  class="starter-template">
+        <p class="lead">You can buy and sell your products on one platform<br/> One_Stop_shop</p>
+        <h3 style="text-align:left">Available Products:</h3><br/><br/>
+
+        <p id="pdisplay">
+
+        </p>
+<button type="button" onclick="sign()">ADD TO CART</button>
+</div>
+<h3>Comments:</h3><br/>
+<p id="commentpara"></p>
+</div>
+{% endblock %}
